@@ -1,4 +1,9 @@
 from fastapi import APIRouter
 
+from app.modules.auth.router import router as auth_router
+from app.modules.rbac.router import router as rbac_router
+
 api_router = APIRouter()
-# Router từng module (auth, bookings, rooms, ...) include tại đây khi module được code.
+api_router.include_router(auth_router)
+api_router.include_router(rbac_router)
+# Router module khác (bookings, rooms, ...) include tại đây khi được code.

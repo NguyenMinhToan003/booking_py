@@ -4,7 +4,9 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.api.main import api_router
 from app.common.exceptions.exception_handlers import register_exception_handlers
+from app.common.middlewares.csrf_middleware import CsrfMiddleware
 from app.configs.settings import get_settings
+from app.database import models_registry  # noqa: F401  -- đăng ký toàn bộ model trước mapper configure
 
 settings = get_settings()
 
@@ -26,6 +28,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(CsrfMiddleware)
 
 register_exception_handlers(app)
 app.include_router(api_router, prefix=settings.API_V1_STR)

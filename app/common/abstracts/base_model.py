@@ -11,7 +11,9 @@ class Base(DeclarativeBase):
 
 
 class BaseModel(Base):
-    """Abstract base cho mọi entity. version dùng cho optimistic lock (xem database/concurrency.py)."""
+    """Abstract base cho mọi entity. version dùng cho optimistic lock (xem database/concurrency.py).
+    deletedAt luôn có mặt (giống BaseEntity bên Nest) nhưng không entity nào bị xoá mềm nếu
+    service của nó không chủ động gọi — xem common/abstracts/deletable_repository.py."""
 
     __abstract__ = True
 
@@ -23,3 +25,4 @@ class BaseModel(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

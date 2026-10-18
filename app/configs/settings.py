@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     SESSION_TOUCH_INTERVAL_SECONDS: int = 60
     SESSION_CACHE_TTL_SECONDS: int = 300
 
+    # Tách riêng khỏi SESSION_CACHE_TTL_SECONDS: 2 cache khác domain (session vs rbac permission),
+    # trùng giá trị default không có nghĩa phải đổi cùng nhau.
+    PERMISSION_CACHE_TTL_SECONDS: int = 300
+
     TRANSACTION_LOCK_TIMEOUT_MS: int = 5000
 
     FIRST_SUPERUSER: str

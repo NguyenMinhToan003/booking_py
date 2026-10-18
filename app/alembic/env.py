@@ -22,6 +22,13 @@ fileConfig(config.config_file_name)
 from app.common.abstracts.base_model import Base  # noqa
 from app.configs.settings import get_settings  # noqa
 
+# Import mọi model để đăng ký vào Base.metadata trước khi mapper configure —
+# cần cho forward-ref relationship (vd User.roles -> "Role") và cho autogenerate thấy đủ bảng.
+from app.common.audit.models import AuditEvent  # noqa
+from app.modules.auth.models import AuthSession  # noqa
+from app.modules.rbac.models import Permission, Role  # noqa
+from app.modules.users.models import User  # noqa
+
 settings = get_settings()
 target_metadata = Base.metadata
 
